@@ -1,0 +1,74 @@
+import axios from 'axios';
+
+// Defaults to /api so that Nginx proxy handles it in production, and Vite proxy handles it in development
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+
+const api = axios.create({
+    baseURL: API_URL,
+});
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => Promise.reject(error));
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
+    }
+);
+
+export const auth = {
+    login: (credentials) => api.post('/auth/login', credentials),
+    register: (userData) => api.post('/auth/register', userData),
+    getMe: () => api.get('/auth/me')
+};
+
+export const casesAPI = {
+    create: (formData) => api.post('/cases', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+    getAll: (params) => api.get('/cases', { params }),
+    getById: (id) => api.get(`/cases/${id}`),
+    updateStatus: (id, status) => api.put(`/cases/${id}/status`, null, { params: { status } }),
+    getStats: () => api.get('/cases/stats'),
+    
+    // Phase C
+    verify: (id) => api.post(`/cases/${id}/verify`),
+    reject: (id) => api.post(`/cases/${id}/reject`),
+    getDuplicates: () => api.get('/duplicates'),
+    confirmDuplicate: (id) => api.post(`/duplicates/${id}/confirm`),
+    rejectDuplicate: (id) => api.post(`/duplicates/${id}/reject`),
+
+    // Phase D
+    getMapData: () => api.get('/dashboard/map'),
+};
+
+export const respondersAPI = {
+    getAll: () => api.get('/responders'),
+    getMe: () => api.get('/responders/me'),
+    updateAvailability: (id, availability) => api.put(`/responders/${id}/availability`, null, { params: { availability } }),
+};
+
+export const tasksAPI = {
+    create: (taskData) => api.post('/tasks', taskData),
+    getAll: () => api.get('/tasks'),
+    getById: (id) => api.get(`/tasks/${id}`),
+    updateStatus: (id, status) => api.put(`/tasks/${id}/status`, null, { params: { status } }),
+};
+
+export const aiAPI = {
+    getPendingMatches: () => api.get('/ai-matches/pending'),
+    acceptMatch: (id) => api.post(`/ai-matches/${id}/accept`),
+    rejectMatch: (id) => api.post(`/ai-matches/${id}/reject`)
+};
+
+export default api;

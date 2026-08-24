@@ -1,0 +1,12 @@
+package com.resqtrace.backend.entity;
+
+public enum AuditAction {
+    CASE_CREATED,
+    VERIFICATION_STARTED,
+    CASE_VERIFIED,
+    CASE_REJECTED,
+    DUPLICATE_CANDIDATE_CREATED,
+    DUPLICATE_CONFIRMED,
+    DUPLICATE_REJECTED,
+    CASES_MERGED
+}

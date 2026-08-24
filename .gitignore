@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build artifacts
+frontend/dist/
+backend/target/
+*.class
+
+# Databases & local storage
+mysql_data/
+mysql_db/
+backend/uploads/
+*.db
+*.sqlite3
+
+# Python
+__pycache__/
+ai_service/__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDEs and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
