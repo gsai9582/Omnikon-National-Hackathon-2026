@@ -7,6 +7,22 @@ export default defineConfig({
   define: {
     global: 'globalThis',
   },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-dom/client',
+      'react-router-dom',
+      'axios',
+      'dexie',
+      'leaflet',
+      'react-leaflet',
+      '@stomp/stompjs',
+      'sockjs-client',
+      '@headlessui/react',
+      'uuid',
+    ],
+  },
   plugins: [
     react(), 
     tailwindcss(),
