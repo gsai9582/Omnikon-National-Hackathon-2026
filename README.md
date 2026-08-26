@@ -6,9 +6,9 @@
     <br />
     <a href="https://demo.resqtrace.org">View Live Demo</a>
     ·
-    <a href="https://github.com/yourusername/ResQTrace/issues">Report Bug</a>
+    <a href="https://github.com/gsai9582/ResQTrace/issues">Report Bug</a>
     ·
-    <a href="https://github.com/yourusername/ResQTrace/issues">Request Feature</a>
+    <a href="https://github.com/gsai9582/ResQTrace/issues">Request Feature</a>
   </p>
 </div>
 
@@ -30,7 +30,6 @@
 
 ## ✨ Key Features
 
-* 📱 **Offline-First PWA:** Citizens and responders can create reports and update task statuses even without an internet connection. Data syncs automatically upon reconnection using IndexedDB and Service Workers.
 * 🤖 **AI-Powered Face Matching:** Utilizes OpenCV and FastAPI to generate face embeddings, suggesting potential duplicate cases or matches across the platform (with mandatory human-in-the-loop verification).
 * 🗺️ **Geographic Mapping & Search Zones:** Interactive mapping powered by Leaflet to visualize last known locations and prototype search zones.
 * ⚡ **Real-Time Task Management:** Live WebSocket updates (STOMP/SockJS) for responder task assignments and status changes.
@@ -46,7 +45,7 @@ ResQTrace is built using a modern microservice-inspired architecture:
 * **Backend:** Spring Boot (Java 21), Spring Security (JWT), Spring Data JPA
 * **Database:** MySQL 8.0+
 * **AI Service:** FastAPI (Python 3.10+), OpenCV (Face embeddings)
-* **Storage:** Configurable Local Storage or S3-compatible Object Storage
+* **Storage:** Configurable Local Storage.
 
 ---
 
@@ -63,12 +62,11 @@ To run the application locally for development, we provide a pre-configured `doc
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/ResQTrace.git
+   git clone https://github.com/gsai9582/ResQTrace.git
    cd ResQTrace
    ```
 
 2. **Configure Environment:**
-   Copy the example environment file and adjust if necessary.
    ```bash
    cp .env.example .env
    ```
@@ -92,25 +90,6 @@ To run the application locally for development, we provide a pre-configured `doc
 
 For production, the Frontend is built as a static site and served via **Nginx**. The Nginx container is configured to reverse-proxy `/api` requests to the Backend container, avoiding CORS issues entirely when served on the same domain.
 
-### Environment Variables
-
-Before deploying, ensure you configure the following environment variables (defined in `.env`):
-
-* `DB_URL`: Production database URL (e.g., `jdbc:mysql://prod-db:3306/resqtrace...`)
-* `DB_USERNAME` & `DB_PASSWORD`: Production database credentials.
-* `JWT_SECRET`: A secure, randomly generated 256-bit string for signing auth tokens.
-* `SERVER_PORT`: Port the backend listens on (default `8080`).
-* `RESQTRACE_CORS_ALLOWED_ORIGINS`: Allowed origins (e.g., `https://your-domain.com`).
-* `RESQTRACE_STORAGE_PROVIDER`: Set to `local` or `s3`.
-* `RESQTRACE_STORAGE_S3_BUCKET`: Your S3 Bucket name.
-* `RESQTRACE_STORAGE_S3_REGION`: Your S3 Region.
-* `AI_SERVICE_URL`: URL to the deployed AI service.
-
-### Storage Configuration
-
-* **Local Storage:** Files will be saved in `/app/uploads` inside the backend container. **Important:** Use a Docker Volume to persist this directory across container restarts.
-* **S3 Storage:** Files will be pushed to the configured S3 bucket via the AWS SDK. Ensure the backend container has IAM permissions or provide AWS credentials via standard AWS environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`).
-
 ### Health Checks
 
 Standard health check endpoints are exposed for container orchestrators (e.g., Kubernetes, ECS, Docker Swarm):
@@ -123,13 +102,12 @@ Standard health check endpoints are exposed for container orchestrators (e.g., K
 
 | Dashboard | Map View |
 |:---:|:---:|
-| <img src="https://via.placeholder.com/600x350/0f172a/ffffff?text=Dashboard+Preview" alt="Dashboard" /> | <img src="https://via.placeholder.com/600x350/0f172a/ffffff?text=Map+Preview" alt="Map View" /> |
+| <img src= "blob:https://web.whatsapp.com/1269cd3e-d75e-4927-8b57-baa44a176d11" alt="Dashboard" /> | <img src="blob:https://web.whatsapp.com/e0e1aee7-6e4a-4f3d-8d87-f28d013747fc" alt="Map View" /> |
 
-| Offline PWA Reporting | AI Match Verification |
+| AI Match Verification |
 |:---:|:---:|
-| <img src="https://via.placeholder.com/600x350/0f172a/ffffff?text=Offline+Sync+Queue" alt="Offline PWA" /> | <img src="https://via.placeholder.com/600x350/0f172a/ffffff?text=AI+Facial+Match" alt="AI Verification" /> |
+| <img src="blob:https://web.whatsapp.com/ecd24a83-98ed-48d3-b853-e41bed6cca35" alt="AI Verification" /> |
 
-*(Replace placeholder URLs with actual screenshots of your application)*
 
 ---
 
