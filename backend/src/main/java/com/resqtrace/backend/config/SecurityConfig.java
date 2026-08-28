@@ -70,7 +70,8 @@ public class SecurityConfig {
                 .filter(s -> !s.isEmpty())
                 .toList();
 
-        if (origins.contains("*")) {
+        if (origins.contains("*") || origins.isEmpty()) {
+            configuration.setAllowedOrigins(null);
             configuration.setAllowedOriginPatterns(List.of("*"));
         } else {
             configuration.setAllowedOrigins(origins);
