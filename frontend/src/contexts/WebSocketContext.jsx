@@ -24,10 +24,18 @@ export function WebSocketProvider({ children }) {
             // But SockJS doesn't support custom HTTP headers in the initial handshake.
             // STOMP over SockJS allows passing headers in the CONNECT frame payload.
             webSocketFactory: () => {
-                const wsUrl = import.meta.env.VITE_WS_URL || (window.location.origin + '/ws');
-                // Fallback for local dev without Nginx
-                const finalUrl = wsUrl.includes('localhost:5173') ? 'http://localhost:8080/ws' : wsUrl;
-                return new SockJS(finalUrl);
+                let wsUrl = import.meta.env.VITE_WS_URL;
+                if (!wsUrl) {
+                    const apiUrl = import.meta.env.VITE_API_URL;
+                    if (apiUrl && (apiUrl.startsWith('http://') || apiUrl.startsWith('https://'))) {
+                        wsUrl = apiUrl.replace(/\/api\/?$/, '') + '/ws';
+                    } else if (window.location.origin.includes('localhost:5173')) {
+                        wsUrl = 'http://localhost:8080/ws';
+                    } else {
+                        wsUrl = window.location.origin + '/ws';
+                    }
+                }
+                return new SockJS(wsUrl);
             },
             connectHeaders: {
                 Authorization: `Bearer ${token}`

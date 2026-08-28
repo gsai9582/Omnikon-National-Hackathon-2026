@@ -14,6 +14,7 @@ import ReportMissingPersonPage from './pages/ReportMissingPersonPage';
 import CaseListPage from './pages/CaseListPage';
 import CaseDetailPage from './pages/CaseDetailPage';
 import AuthorityDashboardPage from './pages/AuthorityDashboardPage';
+import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -37,6 +38,9 @@ function App() {
               <Route path="/cases" element={<ProtectedRoute><CaseListPage /></ProtectedRoute>} />
               <Route path="/cases/:id" element={<ProtectedRoute><CaseDetailPage /></ProtectedRoute>} />
               <Route path="/authority/dashboard" element={<ProtectedRoute><AuthorityDashboardPage /></ProtectedRoute>} />
+
+              {/* Catch-all 404 Route */}
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
         </OfflineSyncProvider>

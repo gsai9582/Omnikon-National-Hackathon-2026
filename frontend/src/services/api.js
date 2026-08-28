@@ -20,11 +20,36 @@ api.interceptors.response.use(
     (error) => {
         if (error.response && error.response.status === 401) {
             localStorage.removeItem('token');
-            window.location.href = '/login';
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/register' && window.location.pathname !== '/') {
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }
 );
+
+export const getPhotoUrl = (photoUrl) => {
+    if (!photoUrl) return null;
+    if (photoUrl.startsWith('http://') || photoUrl.startsWith('https://') || photoUrl.startsWith('blob:') || photoUrl.startsWith('data:')) {
+        return photoUrl;
+    }
+    
+    // Normalize path
+    const normalized = photoUrl.startsWith('/') ? photoUrl : `/${photoUrl}`;
+    
+    // If baseURL is absolute (e.g. http://localhost:8080/api or https://api.domain.com/api)
+    if (API_URL.startsWith('http://') || API_URL.startsWith('https://')) {
+        try {
+            const url = new URL(API_URL);
+            return `${url.origin}${normalized.startsWith('/api') ? normalized : `/api${normalized}`}`;
+        } catch (e) {
+            // fallback
+        }
+    }
+    
+    // Relative URL (standard Nginx proxy / Vite proxy)
+    return normalized.startsWith('/api') ? normalized : `/api${normalized}`;
+};
 
 export const auth = {
     login: (credentials) => api.post('/auth/login', credentials),

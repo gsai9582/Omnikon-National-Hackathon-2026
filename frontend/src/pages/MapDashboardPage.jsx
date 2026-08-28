@@ -76,21 +76,30 @@ function MapDashboardPage() {
                                 <React.Fragment key={marker.id}>
                                     <Marker position={position}>
                                         <Popup>
-                                            <div className="text-slate-800">
-                                                <h3 className="font-bold text-lg mb-1">{marker.shortName}</h3>
-                                                <p className="text-sm mb-1"><strong>Case ID:</strong> {marker.caseId}</p>
-                                                <p className="text-sm mb-1"><strong>Age:</strong> {marker.age} | <strong>Gender:</strong> {marker.gender}</p>
-                                                <p className="text-sm mb-2">
+                                            <div className="text-slate-800 font-sans p-1">
+                                                <h3 className="font-bold text-base mb-1 text-slate-900">{marker.shortName}</h3>
+                                                <p className="text-xs font-mono text-slate-500 mb-1">ID: {marker.caseId}</p>
+                                                <p className="text-xs mb-1"><strong>Demographics:</strong> {marker.age ? `${marker.age} yrs` : 'Age N/A'} | {marker.gender}</p>
+                                                <p className="text-xs mb-2">
                                                     <strong>Status:</strong> 
-                                                    <span className="ml-1 px-2 py-0.5 rounded text-xs text-white" style={{ backgroundColor: color }}>
+                                                    <span className="ml-1 px-2 py-0.5 rounded text-[11px] font-bold text-white uppercase tracking-wider" style={{ backgroundColor: color }}>
                                                         {marker.status}
                                                     </span>
                                                 </p>
                                                 {marker.priorityLevel && (
-                                                    <p className="text-xs text-slate-500 border-t pt-2 mt-2">
-                                                        Priority: {marker.priorityLevel} | Search Radius: {marker.radiusKm}km
+                                                    <p className="text-[11px] text-slate-500 border-t pt-1.5 mt-1.5">
+                                                        Priority: <strong>{marker.priorityLevel}</strong> | Radius: <strong>{marker.radiusKm}km</strong>
                                                     </p>
                                                 )}
+                                                <div className="mt-2 pt-2 border-t border-slate-200">
+                                                    <a 
+                                                        href={`/cases/${marker.id}`} 
+                                                        className="text-xs font-bold text-red-600 hover:text-red-700 hover:underline inline-flex items-center gap-1"
+                                                    >
+                                                        <span>View Case Dossier</span>
+                                                        <span>→</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </Popup>
                                     </Marker>
