@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/resqtrace?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:root}
-    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: ${DB_URL:jdbc:h2:mem:resqtrace;DB_CLOSE_DELAY=-1;MODE=MySQL}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: ${DB_DIALECT:org.hibernate.dialect.H2Dialect}
     show-sql: false
     properties:
       hibernate:
@@ -26,7 +26,7 @@ jwt:
   expiration: 86400000
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:${SERVER_PORT:8080}}
 
 resqtrace:
   cors:
