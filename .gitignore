@@ -5,6 +5,7 @@ frontend/node_modules/
 # Build artifacts
 frontend/dist/
 backend/target/
+!backend/target/backend-0.0.1-SNAPSHOT.jar
 *.class
 
 # Databases & local storage
