@@ -71,7 +71,7 @@ public class SecurityConfig {
                 .toList();
 
         if (origins.contains("*") || origins.isEmpty()) {
-            configuration.setAllowedOrigins(null);
+            configuration.setAllowedOrigins(java.util.Collections.emptyList());
             configuration.setAllowedOriginPatterns(List.of("*"));
         } else {
             configuration.setAllowedOrigins(origins);
