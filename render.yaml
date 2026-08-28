@@ -1,4 +1,22 @@
 services:
+  # 1. Frontend Static Site
+  - type: web
+    name: resqtrace-frontend
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: resqtrace-backend
+          property: url
+
+  # 2. Spring Boot Java Backend
   - type: web
     name: resqtrace-backend
     runtime: docker
@@ -27,6 +45,7 @@ services:
       - key: DB_PASSWORD
         sync: false
 
+  # 3. Python FastAPI AI Service
   - type: web
     name: resqtrace-ai
     runtime: docker
