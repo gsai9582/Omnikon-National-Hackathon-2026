@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-// Defaults to /api so that Nginx proxy handles it in production, and Vite proxy handles it in development
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+// Prioritize environment variables, falling back to the live Render backend
+const API_URL = 
+  import.meta.env.VITE_API_BASE_URL || 
+  import.meta.env.VITE_API_URL || 
+  'https://resqtrace-backend.onrender.com/api';
 
 const api = axios.create({
     baseURL: API_URL,
@@ -37,7 +40,7 @@ export const getPhotoUrl = (photoUrl) => {
     // Normalize path
     const normalized = photoUrl.startsWith('/') ? photoUrl : `/${photoUrl}`;
     
-    // If baseURL is absolute (e.g. http://localhost:8080/api or https://api.domain.com/api)
+    // If baseURL is absolute (e.g. https://resqtrace-backend.onrender.com/api or http://localhost:8080/api)
     if (API_URL.startsWith('http://') || API_URL.startsWith('https://')) {
         try {
             const url = new URL(API_URL);
@@ -47,7 +50,7 @@ export const getPhotoUrl = (photoUrl) => {
         }
     }
     
-    // Relative URL (standard Nginx proxy / Vite proxy)
+    // Relative URL fallback
     return normalized.startsWith('/api') ? normalized : `/api${normalized}`;
 };
 
