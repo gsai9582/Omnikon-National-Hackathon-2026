@@ -28,7 +28,7 @@ public interface MissingPersonRepository extends JpaRepository<MissingPerson, Lo
     @Query("SELECT COUNT(m) FROM MissingPerson m WHERE m.status = :status")
     long countByStatus(@Param("status") CaseStatus status);
 
-    @Query("SELECT MAX(CAST(SUBSTRING(m.caseId, 10) AS integer)) FROM MissingPerson m WHERE m.caseId LIKE CONCAT(:prefix, '%')")
+    @Query("SELECT MAX(CAST(SUBSTRING(m.caseId, 10) AS Long)) FROM MissingPerson m WHERE m.caseId LIKE :prefix%")
     Long findMaxSequenceByPrefix(@Param("prefix") String prefix);
 
     Optional<MissingPerson> findByIdempotencyKey(String idempotencyKey);
