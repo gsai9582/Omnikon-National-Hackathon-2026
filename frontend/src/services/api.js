@@ -1,13 +1,22 @@
 import axios from 'axios';
 
 // Prioritize environment variables, falling back to the live Render backend
-const API_URL = 
+const rawApiUrl = 
   import.meta.env.VITE_API_BASE_URL || 
   import.meta.env.VITE_API_URL || 
   'https://resqtrace-backend.onrender.com/api';
 
+const formatApiUrl = (url) => {
+  if (!url) return 'https://resqtrace-backend.onrender.com/api';
+  const trimmed = url.trim().replace(/\/+$/, '');
+  return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+};
+
+const API_URL = formatApiUrl(rawApiUrl);
+
 const api = axios.create({
     baseURL: API_URL,
+    timeout: 30000, // 30s timeout
 });
 
 api.interceptors.request.use((config) => {
